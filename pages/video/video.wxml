@@ -6,18 +6,34 @@
         <image src="/static/images/logo.png"></image>
     </view>
     <!-- 导航区域 -->
-    <scroll-view class="navScroll" scroll-x enable-flex>
-        <view class="navItem" wx:for="{{videoGroupList}}" wx:key="id">
+    <!-- scroll-into-vie控制导航标签栏切换自动排列到首个 -->
+    <scroll-view class="navScroll" scroll-x enable-flex scroll-into-view="{{'scroll' + navId}}" scroll-with-animation>
+        <view id="{{'scroll' + item.id}}" class="navItem" wx:for="{{videoGroupList}}" wx:key="id">
             <view class="navContent {{navId === item.id ? 'active' : ''}}" bindtap="changeNav" data-id="{{item.id}}" >
                 {{item.name}}
             </view>
         </view>
     </scroll-view>
     <!-- 导航视频区域 -->
-    <scroll-view class="videoScroll" scroll-y>
+    <scroll-view class="videoScroll" 
+      scroll-y 
+      refresher-enabled 
+      bindrefresherpulling="handleRefesher" 
+      refresher-triggered="{{isTriggered}}"
+      bindscrolltolower="handleToLower"
+      >
         <view class="videoItem" wx:for="{{videoList}}" wx:key="id">
-            <video src="{{item.data.urlInfo.url}}"></video>
-
+            <video class="common" src="{{item.data.urlInfo.url}}" 
+            bindplay="handlePlay" 
+            id="{{item.data.vid}}" 
+            poster="{{item.data.coverUrl}}"
+            object-fit="fill"
+            wx:if="{{videoId === item.data.vid}}"
+            bindtimeupdate="handlePlayProcess"
+            bindended="handlePlayEnd"
+            ></video>
+            <!-- 性能优化，使用image标签代替video -->
+            <image class="common" src="{{item.data.coverUrl}}" bindtap="handlePlay" id="{{item.data.vid}}" wx:else></image>
             <view class="content">{{item.data.title}}</view>
             <view class="footer">
                 <image class="avatar" src="{{item.data.creator.avatarUrl}}"></image>
