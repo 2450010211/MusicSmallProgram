@@ -108,6 +108,11 @@ Page({
     //获取更多的数据
     console.log("获取更多的数据");
   },
+  toSearchSong(){ //跳转到搜索页面
+    wx.navigateTo({
+      url: '/pages/search/search',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

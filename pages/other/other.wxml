@@ -1,0 +1,12 @@
+<!-- 引入模板 -->
+<import src="/template/template.wxml" />
+
+<view class="otherContain">
+    <view>测试使用模板</view>
+    <!-- ...语法自动拆包 -->
+    <template is="myTemplate" data="{{...person}}"/>
+    <text class="hr"></text>
+    <!-- 测试获取用户唯一标识openId -->
+    <view class="openId">测试获取用户唯一标识openId</view>
+    <button bindtap="getOpenId">获取OpenId</button>
+</view>
